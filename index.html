@@ -6,44 +6,168 @@
     <title>Portfolio Website</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <!-- Add your HTML code here for the structure of your portfolio website -->
-    <header>
-        <h1>Your Name</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="about">
-            <h2>About Me</h2>
-            <p>Your bio goes here.</p>
-        </section>
-        <section id="projects">
-            <h2>Projects</h2>
-            <!-- Add your project cards here -->
-        </section>
-        <section id="contact">
-            <h2>Contact</h2>
-            <form>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email">
-                <label for="message">Message:</label>
-                <textarea id="message" name="message"></textarea>
-                <button type="submit">Submit</button>
-            </form>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2022 Your Name. All rights reserved.</p>
-    </footer>
-    <!-- Include this line at the end of your body section to connect your JavaScript file -->
-    <script src="scripts.js"></script>
+<body onload="init()">
+  <div> <!-- Big image and its content at the start -->
+    <div>
+      </div>
+        <div>
+          <img src="images/interbarter-logo-bottom.png" alt="logo green"/>
+          <p>Interbarter</p>
+          <p>Giving new life to furniture</p>
+        </div>
+        <div>
+          <button>
+            <a href="login.html" target="_blank">Get Started</a>
+          </button>
+        </div>
+        <p>Scroll down</p>
+      </div>
+    </div>
+  </div>
+  <div> <!-- Navigation bar, sticky-->
+    <a href="#scroll-1">About Us</a>
+    <a href="#scroll-2">Explore</a>
+    <a href="#scroll-3">Contact Us</a>
+  </div>
+  <section> <!-- Body Text -->
+    <div> 
+      <h2>The Problem</h2>
+      <p>People throw away perfectly good furniture. Furniture is wasted and reduced to trash, when it's value could be much more to others. </p>
+      <p id="scroll-1">But what if there was a way to optimise the value of unwanted furniture? That’s where Interbarter comes in – an innovative platform that connects people willing to part with their unwanted items with those looking for something similar.</p>
+    </div>
+    <section> 
+      <img src="images/interbarter-black-white.png" alt="black and white logo"/>
+      <div>
+        <h2>About Us</h2>
+        <p>Based in Singapore, we strive for furniture to go unwasted and making the best use for it. We help others around Singapore to use other's furniture, that they may enjoy </p>
+      </div>
+    </section>
+    <section> <!-- Benefits of using Interbarter -->
+        <h2>Why Interbarter?</h2>
+        <div>
+            <img src="images/gift.png" alt="icon-gift"/>
+            <h2>Share</h2>
+            <p>Give furniture to those who could use it</p>
+        </div>
+        <div>
+            <img src="images/clover.png" alt="icon-clover"/>
+            <h2>Earn</h2>
+            <p>Gain coins from giving away unwanted furniture</p>
+        </div>
+        <div>
+            <img src="images/cart.png" alt="icon-cart"/>
+            <h2>Buy</h2>
+            <p>Use coins to purchase your own furniture</p>
+        </div>
+    </section>
+    <section> 
+      <div>
+        <div>
+          <h4>Give to Earn</h4>
+          <p>01</p>
+        </div> 
+        <hr>
+        <p>When you use Interbarter, by giving away unwanted furniture, you receive Clover coins that allow you to purchase other second-hand furniture provided by other users when your goods are purchased. 
+
+          In other words, you gain something by losing nothing.</p>
+      </div>
+
+      <div>
+        <div>
+          <h4>Storage Services</h4>
+          <p>02</p>
+        </div> 
+        <hr>
+        <p>We store your furniture for you elsewhere, so you can carry about your daily life not worrying any more about it! Once you submit the furniture, we will arrive to collect it. 
+          No more storage hassels waiting for someone to purchase your things!
+        </p>
+    </section>
+    <div></div>
+    <section> 
+      <h2>Explore</h2>
+      <div> <!-- Database of 4 items to explore -->
+        <div>
+          <div>
+            <p>40 Coins</p>
+            <img src="images/tan-chair.jpg" alt="Example Image">
+          </div>
+          <div>
+            <h4>Section 1</h4>
+            <p>Lorem ipsum dolor sit amet</p>
+          </div>
+        </div>
+        <div>
+          <div>
+            <p>40 Coins</p>
+            <img src="images/tan-chair.jpg" alt="Example Image">
+          </div>
+          <div>
+            <h4>Section 1</h4>
+            <p>Lorem ipsum dolor sit amet</p>
+          </div>
+        </div>
+        <div>
+          <div>
+            <p>40 Coins</p>
+            <img src="images/tan-chair.jpg" alt="Example Image">
+          </div>
+          <div>
+            <h4>Section 1</h4>
+            <p>Lorem ipsum dolor sit amet</p>
+          </div>
+        </div>
+        <div>
+          <div>
+            <p>40 Coins</p>
+            <img src="images/tan-chair.jpg" alt="Example Image">
+          </div>
+          <div>
+            <h4>Section 1</h4>
+            <p>Lorem ipsum dolor sit amet</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section> <!-- Contact Us -->
+      <div></div>
+      <h2>Contact Us</h2>
+      <div>
+        <img src="images/phone-contact-icon.png" alt="icon-phone"/>
+        <p>+65 1234 5678</p>
+      </div>
+      <div>
+        <img src="images/mail-contact-icon.png" alt="icon-mail"/>
+        <p>Interbarter@gmail.com</p>
+      </div>
+    </section>
+  </section>
+  <footer> <!-- Footer -->
+    <div>
+      <img src="images/interbarter-black-white.png" alt="ilogo">
+      <a href="#" >Interbarter</a>
+    </div>
+    <div></div>
+    <div>
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="#scroll-1">About Us</a></li>
+          <li><a href="#scroll-2">Explore</a></li>
+          <li><a href="#scroll-3">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Partners</h4>
+        <ul>
+          <li><a href="#">Fireflyx</a></li>
+          <li><a href="#">Lynxcode</a></li>
+          <li><a href="#">PrograME</a></li>
+          <li><a href="#">QuickScript</a></li>
+          <li><a href="#">Pet Peak</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script src="js/script.js"></script>
 </body>
 </html>
