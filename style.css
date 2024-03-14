@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+#why div div h4 {
+    font-family: "Libre Baskerville", serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 20px;
+}
+
+#start {
+    display: grid;
+    
+}
+
+#why {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 61.803% 38.197%;
+}
+
+#why-grid-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    color: black;
+    padding: 100px 200px;
+}
+
+#why-grid-2 {
+    justify-content: center;
+    align-items: center;
+}
+
+
+#why-grid-img-1 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
