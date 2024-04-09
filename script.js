@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function toggleOpacity(element, finalOpacity) {
-    star.element.style.transition = `transform 4s ease-out, opacity 3s ease`; // Set up transitions for transform and opacity properties
+    element.style.transition = `transform 4s ease-out, opacity 3s ease`; // Set up transitions for transform and opacity properties
     element.style.opacity = finalOpacity;
   }
   
@@ -106,11 +106,10 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
               toggleOpacity(star.element, newOpacity);
             }
-          } else {
-            
           }
 
           // Apply the transformation to move the star
+          star.element.style.transform = `translate(${(dx * parallaxFactor)}px, ${(dy * parallaxFactor + upwardMovement)}px)`;
           star.element.style.transition = `transform 4s ease-out, opacity 3s ease`; // Set up transitions for transform and opacity properties
           star.element.style.transform = `translate(${(dx * parallaxFactor)}px, ${(dy * parallaxFactor + upwardMovement)}px)`;
           
