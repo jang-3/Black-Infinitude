@@ -46,65 +46,89 @@ document.addEventListener('DOMContentLoaded', function() {
     );
   }
 
-function updateScene() {
-    const elapsedTime = Date.now() - startTime;
-    const t = Math.min(elapsedTime / duration, 1); // Progress from 0 to 1
-    const speedMultiplier = cubicBezier(t, 0, 1, 20, 5, 0); // Get speed multiplier using cubic Bezier function
-
-    stars.forEach(star => {
-        const cy = parseFloat(star.element.getAttribute('cy')) - (star.speed * speedMultiplier);
-        if (cy < -parseFloat(star.element.getAttribute('r'))) {
-            star.element.setAttribute('cx', Math.random() * width);
-            star.element.setAttribute('cy', height + parseFloat(star.element.getAttribute('r')));
-        } else {
-            star.element.setAttribute('cy', cy);
-        }
-
-        if (Math.random() < 0.001) {
-          const newOpacity = Math.random() * 0.3 * (1 - star.size / 10);
-          star.element.setAttribute('opacity', newOpacity);
+  function toggleOpacity(element, finalOpacity) {
+    star.element.style.transition = `transform 4s ease-out, opacity 3s ease`; // Set up transitions for transform and opacity properties
+    element.style.opacity = finalOpacity;
+  }
   
-          // Change location
-          if (Math.random() < 0.2) { // 50% chance of changing location
-            const newX = Math.random() * width;
-            const newY = Math.random() * height;
-            star.element.setAttribute('cx', newX);
-            star.element.setAttribute('cy', newY);
+  function updateScene() {
+      const elapsedTime = Date.now() - startTime;
+      const t = Math.min(elapsedTime / duration, 1); // Progress from 0 to 1
+      const speedMultiplier = cubicBezier(t, 0, 1, 20, 5, 0); // Get speed multiplier using cubic Bezier function
+
+      stars.forEach(star => {
+          const cy = parseFloat(star.element.getAttribute('cy')) - (star.speed * speedMultiplier);
+          if (cy < -parseFloat(star.element.getAttribute('r'))) {
+              star.element.setAttribute('cx', Math.random() * width);
+              star.element.setAttribute('cy', height + parseFloat(star.element.getAttribute('r')));
+          } else {
+              star.element.setAttribute('cy', cy);
           }
-        }  
+          
+          // Store previous cursor position
+          let prevCursor = { x: cursor.x, y: cursor.y };
 
-        // Calculate rate of change of each star
-        star.dx = star.x - star.prevX;
-        star.dy = star.y - star.prevY;
+          // Calculate the difference between current and previous cursor positions
+          const dxMouse = cursor.x - prevCursor.x;
+          const dyMouse = cursor.y - prevCursor.y;
 
-        // Update previous position
-        star.prevX = star.x;
-        star.prevY = star.y;
+          // Update the previous cursor position
+          prevCursor = { x: cursor.x, y: cursor.y };
 
-        // Parallax effect including cursor movement
-        const dx = cursor.x - star.x;
-        const dy = cursor.y - star.y;
-        const parallaxFactor = 0.05 * (star.size/5);
+          // Update star position based on the difference between current and previous cursor positions
+          star.x += dxMouse;
+          star.y += dyMouse;
 
-        // Constant upward movement proportional to star size
-        const upwardMovement = -star.size * 0.1 * speedMultiplier;
+          // Parallax effect including cursor movement
+          const dx = cursor.x - star.x;
+          const dy = cursor.y - star.y;
+          const parallaxFactor = 0.4 * (star.size / 5);
 
-        // Apply the transformation to move the star
-        star.element.style.transform = `translate(${dx * parallaxFactor}px, ${dy * parallaxFactor + upwardMovement}px)`;
-    });
-  }
+          // Constant upward movement proportional to star size
+          const upwardMovement = -star.size * 0.1 * speedMultiplier;
 
-  function updateCursor(event) {
-      cursor.x = event.clientX;
-      cursor.y = event.clientY;
-  }
+          const storemousepos = cursor.x + cursor.y
 
-  function updateSpeed(event) {
-      startTime = Date.now(); // Update start time when speed changes
-      // Other speed update logic
-  }
+          // Inside updateScene function
+          if (Math.random() < 0.001) {
+            const newOpacity = Math.random() * 0.3 * (1 - star.size / 10);
+            
+            // Change location
+            if (Math.random() < 0.2) { // 50% chance of changing location
+              toggleOpacity(star.element, 0); // Fade out
+              setTimeout(() => { // Delay changing location until after the fading out transition
+                const newX = Math.random() * width;
+                const newY = Math.random() * height;
+                star.element.setAttribute('cx', newX);
+                star.element.setAttribute('cy', newY);
+                toggleOpacity(star.element, newOpacity); // Fade in
+              }, 3000); // 3000 milliseconds = 3 seconds (duration of the fading out transition)
+            } else {
+              toggleOpacity(star.element, newOpacity);
+            }
+          } else {
+            
+          }
 
-  document.addEventListener('mousemove', updateCursor);
-  document.getElementById('speedControl').addEventListener('input', updateSpeed);
-  setInterval(updateScene, 10);
+          // Apply the transformation to move the star
+          star.element.style.transition = `transform 4s ease-out, opacity 3s ease`; // Set up transitions for transform and opacity properties
+          star.element.style.transform = `translate(${(dx * parallaxFactor)}px, ${(dy * parallaxFactor + upwardMovement)}px)`;
+          
+
+      });
+    }
+
+    function updateCursor(event) {
+        cursor.x = event.clientX;
+        cursor.y = event.clientY;
+    }
+
+    function updateSpeed(event) {
+        startTime = Date.now(); // Update start time when speed changes
+        // Other speed update logic
+    }
+
+    document.addEventListener('mousemove', updateCursor);
+    document.getElementById('speedControl').addEventListener('input', updateSpeed);
+    setInterval(updateScene, 10);
 });

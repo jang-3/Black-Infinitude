@@ -73,11 +73,13 @@ body {
     height: 100%;
     overflow: hidden; /* Ensure stars outside viewport are hidden */
     display: block;
+    
 }
 
 .star {
     fill: white;
     animation: moveStar linear infinite;
+    transition: translate 3s ease;
 }
 
 
