@@ -9,7 +9,6 @@ body {
     height: 100%;
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
-    color: white;
     overflow-x: hidden;
 }
 
@@ -55,10 +54,12 @@ body {
 }
 
 #div-stars {
-    display: block;
-    width: 120vh;
+    width: 100%;
     height: 100vh;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 #div-stars input {
@@ -74,13 +75,13 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden; /* Ensure stars outside viewport are hidden */
-    display: block;
     
 }
 
 .star {
     fill: white;
     border-radius: 10px;
+    transform 4s ease-out, opacity 3s ease;
 }
 
 /* .star {
@@ -104,4 +105,12 @@ body {
     /* Add additional styles for animation if needed */
 }
 
-
+#bg-gradient {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top,
+        #833d3d 0%,
+        #2a161e 1.3%,
+        #110f1a 10%,
+        black 50%);
+}

@@ -29,74 +29,72 @@ document.addEventListener('DOMContentLoaded', function() {
     svg.appendChild(dot);
 
     return { element: dot, speed: speed, x: x, y: y, size: size, opacity: opacity }; // Store initial position, size, and opacity
-}
+  }
 
-const clouds = []; // Array to store cloud objects
-let cloudSpeed = 0.2; // Speed at which clouds will move horizontally
+  const clouds = []; // Array to store cloud objects
+  let cloudSpeed = 0.2; // Speed at which clouds will move horizontally
 
-function generateCloudSlope() {
-  const slopeRange = 0.2; // Define slope range
-  const slope = (Math.random() - 0.2) * slopeRange; // Generate random slope
-  const yIntercept = Math.random() * height; // Choose y-intercept within viewport height
-  return { slope, yIntercept };
-}
+  function generateCloudSlope() {
+    const slopeRange = 0.2; // Define slope range
+    const slope = (Math.random() - 0.2) * slopeRange; // Generate random slope
+    const yIntercept = Math.random() * height; // Choose y-intercept within viewport height
+    return { slope, yIntercept };
+  }
 
-function createCloud() {
-  const svgNS = "http://www.w3.org/2000/svg";
-  const cloud = document.createElementNS(svgNS, 'polygon');
-  const points = [];
-  const cloudWidth = Math.random() * 100 + 900; // Keep the cloud width large
-  const cloudHeight = Math.random() * 15 + 20; // Keep cloud height small for a flat look
-  const baselineY = Math.random() * 100 + 400; // Position the baseline lower on the canvas
-  const numPoints = 6; // Keep a small number of points for a more geometric look
-  const avgx = cloudWidth / (numPoints - 1);
-  
-  // Generate the points for the cloud with sharper corners
-  for (let i = 0; i < numPoints; i++) {
-    let x = avgx * i;
-    let y;
+  function createCloud() {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const cloud = document.createElementNS(svgNS, 'polygon');
+    const points = [];
+    const cloudWidth = Math.random() * 100 + 900; // Keep the cloud width large
+    const cloudHeight = Math.random() * 15 + 20; // Keep cloud height small for a flat look
+    const baselineY = Math.random() * 100 + 400; // Position the baseline lower on the canvas
+    const numPoints = 6; // Keep a small number of points for a more geometric look
+    const avgx = cloudWidth / (numPoints - 1);
     
-    if (i % 2 === 0) {
-      // The even points will be on the baseline, creating the flat bottom of the cloud
-      y = baselineY;
-    } else {
-      // The odd points will be the peaks of the cloud
-      y = baselineY - cloudHeight;
+    // Generate the points for the cloud with sharper corners
+    for (let i = 0; i < numPoints; i++) {
+      let x = avgx * i;
+      let y;
+      
+      if (i % 2 === 0) {
+        // The even points will be on the baseline, creating the flat bottom of the cloud
+        y = baselineY;
+      } else {
+        // The odd points will be the peaks of the cloud
+        y = baselineY - cloudHeight;
+      }
+      
+      // Add the point to the points array
+      points.push(`${x},${y}`);
     }
     
-    // Add the point to the points array
-    points.push(`${x},${y}`);
+    // Complete the shape by returning to the starting y position
+    points.push(`${cloudWidth},${baselineY}`);
+    points.push(`0,${baselineY}`);
+
+    const pointsAttribute = points.join(' ');
+    cloud.setAttribute('points', pointsAttribute);
+    cloud.setAttribute('fill', 'white');
+    cloud.classList.add('cloud');
+    cloud.setAttribute('opacity', '0.5'); // Slightly transparent for a cloud-like look
+
+    // Assuming 'svg' is the SVG element already present in the DOM
+    document.querySelector('svg').appendChild(cloud);
+
+    return {
+      element: cloud,
+      opacity: 0.5,
+      x: 0,
+      y: baselineY - cloudHeight // Adjust the y position here if needed
+    };
   }
-  
-  // Complete the shape by returning to the starting y position
-  points.push(`${cloudWidth},${baselineY}`);
-  points.push(`0,${baselineY}`);
-
-  const pointsAttribute = points.join(' ');
-  cloud.setAttribute('points', pointsAttribute);
-  cloud.setAttribute('fill', 'white');
-  cloud.classList.add('cloud');
-  cloud.setAttribute('opacity', '0.5'); // Slightly transparent for a cloud-like look
-
-  // Assuming 'svg' is the SVG element already present in the DOM
-  document.querySelector('svg').appendChild(cloud);
-
-  return {
-    element: cloud,
-    opacity: 0.5,
-    x: 0,
-    y: baselineY - cloudHeight // Adjust the y position here if needed
-  };
-}
 
 
-// You will need to implement or replace this function with actual slope calculation logic
-function generateCloudSlope() {
-  // Placeholder function; implement according to your needs or replace with fixed values
-  return { slope: -0.5, yIntercept: 50 };
-}
-
-
+  // You will need to implement or replace this function with actual slope calculation logic
+  function generateCloudSlope() {
+    // Placeholder function; implement according to your needs or replace with fixed values
+    return { slope: -0.5, yIntercept: 50 };
+  }
 
   const numStars = 500;
   const stars = [];
@@ -123,7 +121,6 @@ function generateCloudSlope() {
   }
 
   function toggleOpacity(element, finalOpacity) {
-    element.style.transition = `transform 4s ease-out, opacity 3s ease`; // Set up transitions for transform and opacity properties
     element.style.opacity = finalOpacity;
   }
   
@@ -168,7 +165,6 @@ function generateCloudSlope() {
       // Inside updateScene function
       if (Math.random() < 0.001) {
         const newOpacity = Math.random() * 0.3 * (1 - star.size / 10);
-        
         // Change location
         if (Math.random() < 0.2) { // 50% chance of changing location
           toggleOpacity(star.element, 0); // Fade out
@@ -192,6 +188,8 @@ function generateCloudSlope() {
 
     });
 
+    let cloudsToRemove = [];
+
     clouds.forEach(cloud => {
       // Fade in the cloud if it's not fully opaque
       if (cloud.opacity < 1) {
@@ -204,14 +202,32 @@ function generateCloudSlope() {
       cloud.y = cloud.y 
       cloud.element.setAttribute('transform', `translate(${cloud.x},${cloud.y * speedMultiplier})`);
     
-      // If the cloud has moved beyond the viewport, reposition it to the other side
-      if (cloud.x > width + cloud.cloudWidth) { // cloud.cloudWidth should be the individual cloud's width
-        cloud.x = -cloud.cloudWidth;
-      } else if (cloud.x < -cloud.cloudWidth) {
-        cloud.x = width;
+      if (cloud.x > width + cloud.cloudWidth) {
+        // Mark the cloud for removal
+        cloudsToRemove.push(index);
+        // Create a new cloud at the left side
+        const newCloud = createCloud();
+        newCloud.x = -newCloud.cloudWidth;
+        clouds.push(newCloud);
+      }
+      // Check if the cloud has moved beyond the viewport to the left
+      else if (cloud.x < -cloud.cloudWidth) {
+        // Mark the cloud for removal
+        cloudsToRemove.push(index);
+        // Create a new cloud at the right side
+        const newCloud = createCloud();
+        newCloud.x = width;
+        clouds.push(newCloud);
       }
     });
     
+    cloudsToRemove.forEach((cloudIndex) => {
+      const cloudToRemove = clouds[cloudIndex];
+      if (cloudToRemove) {
+        svg.removeChild(cloudToRemove.element); // Assuming 'svg' is your SVG container
+      }
+    });
+    clouds = clouds.filter((_, index) => !cloudsToRemove.includes(index));
     
   }
   
@@ -228,5 +244,12 @@ function generateCloudSlope() {
   
     document.addEventListener('mousemove', updateCursor);
     document.getElementById('speedControl').addEventListener('input', updateSpeed);
-    setInterval(updateScene, 10);
+    let updateInterval = setInterval(updateScene, 10);
+
+  // After 4 seconds, clear the initial interval and set a new one
+  setTimeout(() => {
+    clearInterval(updateInterval); // Clear the initial interval
+    updateInterval = setInterval(updateScene, 40); // Set the new interval
+  }, 10000); // 4 seconds expressed in milliseconds
+
 });
