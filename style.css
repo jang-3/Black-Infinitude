@@ -10,6 +10,7 @@ body {
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
     color: white;
+    overflow-x: hidden;
 }
 
 #why div div h4 {
@@ -55,8 +56,9 @@ body {
 
 #div-stars {
     display: block;
-    width: 120%;
+    width: 120vh;
     height: 100vh;
+    overflow: hidden;
 }
 
 #div-stars input {
@@ -78,9 +80,28 @@ body {
 
 .star {
     fill: white;
-    animation: moveStar linear infinite;
-    transition: translate 3s ease;
+    border-radius: 10px;
 }
 
+/* .star {
+    transition: transform 4s ease-out, opacity 3s ease;
+    will-change: transform, opacity;
+    color: white;
+} */
+
+.star-glow-small {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, ));
+}
+
+.star-glow-big {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+.special-star {
+    transition: all 0.5s ease;
+    will-change: transform, opacity;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+    /* Add additional styles for animation if needed */
+}
 
 
